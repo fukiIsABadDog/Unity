@@ -12,7 +12,14 @@ public class MouseLook : MonoBehaviour
     }
 
     public RotationAxes axes = RotationAxes.MouseXandY;
+
     public float sensitivityHor = 9.0f;
+
+    public float sensitivityVert = 9.0f;
+    public float minVert = -45.0f;
+    public float maxVert = 45.0f;
+    private float verticalRotation = 0;
+
 
   void Update()
     {
@@ -22,7 +29,10 @@ public class MouseLook : MonoBehaviour
         }
         else if(axes == RotationAxes.MouseY)
         {
-
+            verticalRotation -= Input.GetAxis("Mouse Y") * sensitivityVert;
+            verticalRotation = Mathf.Clamp(verticalRotation, minVert, maxVert);
+            float horizontalRotation = transform.localEulerAngles.y;
+            transform.localEulerAngles = new Vector3(verticalRotation, horizontalRotation, 0);
         }
         else
         {
